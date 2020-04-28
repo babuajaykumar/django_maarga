@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %} | User Dashboard {% endblock %}
+
+{% block javascript %}
+  <script>
+    $(document).ready(function(){
+
+      $('#apartment_type').change(function(){
+      var fid = document.getElementById("apartment_type");
+      var flatvalue = fid.options[fid.selectedIndex].text;
+      $('#change_results').text('Loading...Apartment');
+
+      $.ajax({
+          url: '{% url "apartmentsFilter" %}',
+          type: "POST", // or "get"
+
+          data: {
+           'search_term': 'Search term inside AJAX',
+           'flatval': flatvalue,
+           'flatid': fid
+         },
+         processData: false,
+         contentType: false,
+         dataType: 'json',
+          headers: {'X-CSRFToken': '{{ csrf_token }}'}, // for csrf token
+          success: function(data) {
+                  $('#change_results').text("AJAY IS OK");
+
+          }});
+      });
+  });
+
+  </script>
+{% endblock %}
+
+{% block content %}
+<!-- -->
+
+  <!-- Breadcrumb -->
+  <form id="flatform" name="flatform">
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'index' %}">
+              <i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="{% url 'index' %}">
+               Building </a>
+          </li>
+          <li class="breadcrumb-item active"> Select an Apartment</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <section id="showcase-inner" class="py-5 text-white">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-md-10">
+            <h1 class="display-4">Apartment Selection Dashboard</h1>
+              <label id="change_results"></label>
+              <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                      <label >Select Flat Type</label>
+                      <select name="apartment_type" class="form-control" id="apartment_type">
+                        <option selected="true" disabled="disabled" >
+                        Type of Apartment (All)</option>
+                        {%  for k,v in apartment_types.items %}
+                      <option value="{{ k }}" >{{ v }}</option>
+                      {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label >Select Block</label>
+                      <select name="block_type" class="form-control" id="block_type">
+                        <option selected="true" disabled="disabled">Block Type (Any)</option>
+                         {%  for k,v in block_types.items %}
+                      <option value="{{ k }}">{{ v }}</option>
+                      {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label >Select Floor</label>
+                      <select name="floor_type" class="form-control" id="floor_type">
+                        <option selected="true" disabled="disabled">Block Type (Any)</option>
+                         {%  for k,v in Floor_choices.items %}
+                      <option value="{{ k }}">{{ v }}</option>
+                      {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label >Unit Numbers</label>
+                      <select name="unit_number" class="form-control" id="unit_number">
+                        <option selected="true" disabled="disabled">Unit Numbers</option>
+                         {%  for k,v in Floor_choices.items %}
+                      <option value="{{ k }}">{{ v }}</option>
+                      {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+</form>
+
+ {% include 'partials/_alerts.html' %}
+{% endblock%}

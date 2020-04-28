@@ -1,0 +1,63 @@
+MODEL/DB FIELDS
+
+------FLAT_TYPES-------
+ID: INT
+FLAT_TYPE: STR
+FLAT_SQFT: INT
+bedrooms: INT
+bathrooms: INT
+DINING_HALL: BOOL [false]
+photo_main: STR
+ISOMETRIC_VIEW: STR
+FLOOR_PLAN: STR
+photo_1: STR
+photo_2: STR
+photo_3: STR
+photo_4: STR
+-------------
+----NUMBER_OF_FLOORS----
+FLOOR_ID: INT
+FLOOR_NUM: INT
+----------------
+----FLAT_BLOCK---
+BLOCK_ID: INT
+BLOCK_NUM: STR
+--------------
+------------------
+UNIT_FLAT
+id: INT
+FLAT_ID: INT (FOREIGN KEY[ FLAT_TYPE])
+FLOOR_ID :INT(FOREIGN KEY[ NUMBER_OF_FLOORS])
+BLOCK_ID : INT (FOREIGN KEY[ FLAT_BLOCK])
+title: STR (ex: G-202, 303, 104, E-405)
+address: STR
+city: STR
+state: STR
+zipcode: STR
+description: TEXT
+price: INT
+parking: INT
+is_available : BOOL [true]
+FACING: STR
+
+------------------------------------
+
+CAROUSEL_IMAGES
+ID: INT
+SLIDE_photo_1: STR
+SLIDE_photo_2: STR
+SLIDE_photo_3: STR
+SLIDE_photo_4: STR
+SLIDE_photo_5: STR
+SLIDE_photo_6: STR
+
+------------------------------------------------------------------------------
+##CONTACT
+id: INT
+user_id: INT
+flat_id: INT
+name: STR
+email: STR
+phone: STR
+message: TEXT
+contact_date: DATE
