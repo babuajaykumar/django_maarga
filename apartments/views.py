@@ -18,23 +18,15 @@ def apartment(request):
 
 
 def apartmentsFilter(request):
+    #request_getdata=request.GET['apartment_type']
+    #request_getdata = request.GET['apartment_type']
+    #request_getdata = request.POST.get('flatid', None)
+    flatvalue = request.GET['flatid']
 
-    if request.method == 'POST':
-        #request_getdata = request.POST.get('apartment_type', None)
-        flattype = request.GET['apartment_type']
+    print("**********INSIDE FILTER APARTMENTS FLAT FIRST VALYE******^^^^^^^^^",flatvalue, flush=True)
+    #print("**********INSIDE FILTER APARTMENTS USING AJAX VALUEs************:::***",request_getdata, flush=True)
 
-         #GET FORM VALUES
-        #encoded_search_term = urllib.parse.quote(flatform.cleaned_data['search_term'])
-        #encoded_flatId = urllib.parse.quote(flatform.cleaned_data['flatid'])
-        #encoded_flatValue = urllib.parse.quote(flatform.cleaned_data['flatval'])
 
-        print("**********INSIDE FILTER APARTMENTS USING AJAX************:::",flattype)
-
-        ''' context = {
-            'apartment_types': apartment_types,
-            'block_types_Filter': block_types_Filter,
-            'Floor_choices_Filter': Floor_choices_Filter
-         }'''
-    return JsonResponse({"myajax":"OK AJAX CALL"})
+    return JsonResponse({"myajax":flatvalue})
     #return JsonResponse(context)
     #return render(request, 'apartments/flat.html', context)
