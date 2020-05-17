@@ -8,28 +8,25 @@
 
       $('#apartment_type').change(function(){
       var fid = document.getElementById("apartment_type").value;
-
+      $('#block_type').attr('disabled', false);
+       //$('#block_type').bootstrapToggle();
 
       $('#change_results').text('Loading...Apartment');
 
       $.ajax({
           url: '{% url "apartmentsFilter" %}',
-          /*type: "POST", // or "get"
-          modal: false,*/
-
           data: {
            'search_term': 'Search term inside AJAX',
-           
+
            'flatid': fid
          },
-         /*processData: false,
-         contentType: false, */
+
          contentType: 'application/json',
          dataType: 'json',
          headers: {'X-CSRFToken': '{{ csrf_token }}'},
           // for csrf token
          success: function(data) {
-                  $('#change_results').text("AJAX OK");
+                  $('#change_results').text(data['myajax']);
 
           }});
       });
@@ -73,17 +70,19 @@
                       <select name="apartment_type" class="form-control" id="apartment_type">
                         <option  selected="true" disabled="disabled" >
                         Type of Apartment (All)</option>
-                        {%  for k,v in apartment_types.items %}
-                      <option value="{{ k }}" >{{ v }}</option>
+                        {% for apartment_type in apartment_types %}
+
+                      <option value="{{ apartment_type.id }}" >{{ apartment_type.flat_type }}</option>
                       {% endfor %}
                       </select>
                     </div>
                     <div class="col-md-3 mb-3">
                       <label >Select Block</label>
-                      <select name="block_type" class="form-control" id="block_type">
+                      <select name="block_type" class="form-control" id="block_type" disabled="disabled">
                         <option selected="true" disabled="disabled">Block Type (Any)</option>
-                         {%  for k,v in block_types.items %}
-                      <option value="{{ k }}">{{ v }}</option>
+
+                           {% for block_type in block_types %}
+                      <option value="{{ block_type.id }}">{{ block_type.block_name }}</option>
                       {% endfor %}
                       </select>
                     </div>
